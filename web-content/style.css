@@ -1,0 +1,62 @@
+body {
+    font-family:Helvetica;
+}
+
+.logo {
+    margin:0;
+}
+
+#url {
+    transition: width 1s;
+    width:25%;
+    position:relative;
+}
+
+#url:focus {
+    width:50%;
+}
+
+#pass {
+    position:relative;
+    width:25%;
+}
+
+#options {
+    transition:width 0.5s, height 0.5s, opacity 0.5s;
+    background:#f0f0f0;
+    border-radius:10px;
+    margin-top:1%;
+    padding:1%;
+    width:0;
+    height:0;
+    opacity:0;
+}
+
+.invalid {
+    animation:shake .6s linear;
+    border-color:red;
+}
+
+@keyframes shake {
+    0% {
+        left:-10px;
+    }
+    16% {
+        left:9px;
+    }
+    33% {
+        left:-6px;
+    }
+    50% {
+        left:5px;
+    }
+    66% {
+        left:-2px;
+    }
+    83% {
+        left:1px;
+    }
+    100% {
+        left: 0px;
+    }
+}

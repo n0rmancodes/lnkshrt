@@ -1,0 +1,5 @@
+{
+    "allowPasswords": true,
+    "idType": "word",
+    "idLength": 5
+}

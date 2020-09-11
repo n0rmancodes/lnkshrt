@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LnkShrt</title>
+        <link href="style.css" rel="stylesheet">
+    </head>
+    <body>
+        <h1 class="logo">LnkShrt</h1>
+        <div>
+            <input placeholder="Put long url." id="url">
+            <button onclick="openOptions()">options</button>
+            <button onclick="createUrl()">shorten!</button>
+        </div>
+        <div id="options" style="display:none;">
+            <label for="sec">Security</label>
+            <select autocomplete="off" name="sec" id="sec" oninput="if (this.value == '2') {document.getElementById('pass').style.display = '';} else {document.getElementById('pass').style.display = 'none';}">
+                <option value="1">Simple Redirect</option>
+                <option value="2">Password</option>
+            </select>
+            <input id="pass" placeholder="Make a password" type="password" style="display:none;">
+        </div>
+        <p id="rUrl" style="margin:0;"></p>
+        <p id="error" style="color:red;margin:0;"></p>
+        <script src="app.js"></script>
+    </body>
+</html>

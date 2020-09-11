@@ -1,0 +1,24 @@
+{
+  "name": "lnkshrt",
+  "version": "1.0.0",
+  "description": "simple and customizable link shortener",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/n0rmancodes/lnkshrt.git"
+  },
+  "keywords": [
+    "link",
+    "shortener",
+    "webtool"
+  ],
+  "author": "n0rmancodes",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/n0rmancodes/lnkshrt/issues"
+  },
+  "homepage": "https://github.com/n0rmancodes/lnkshrt#readme"
+}

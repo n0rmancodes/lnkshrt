@@ -3,7 +3,7 @@ const fs = require("fs");
 const url = require("url");
 const config = JSON.parse(fs.readFileSync("./config.json"))
 
-http.createServer(runServer).listen(process.env.PORT | 3333);
+http.createServer(runServer).listen(process.env.PORT || 3333);
 
 function runServer(req, res) {
     var requestUrl = url.parse(req.url, true);

@@ -12,5 +12,12 @@
             <p style="color:red;" id="error"></p>
         </div>
         <script src="/unlock.js"></script>
+        <script>
+            document.getElementById("pass").addEventListener("keydown", function(event) {
+                if (event.keyCode == 13) {
+                    unlock();
+                }
+            })
+        </script>
     </body>
 </html>

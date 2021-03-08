@@ -1,9 +1,34 @@
 const http = require("http");
 const fs = require("fs");
 const url = require("url");
-const config = JSON.parse(fs.readFileSync("./config.json"))
 
-http.createServer(runServer).listen(process.env.PORT || 3333);
+if (!fs.existsSync(__dirname + "/config.json")) {
+    if (process.env.H_CAPTCHA) {var c = true; var ck = process.env.H_CAPTCHA;} else {var c = false;}
+    if (c == false) {
+        var j = JSON.stringify({
+            allowPasswords: true,
+            allowCaptcha: false,
+            idLength: 5
+        })
+    } else {
+        var j = JSON.stringify({
+            allowPasswords: true,
+            allowCaptcha: true,
+            hCaptchaKey: ck,
+            idLength: 5
+        })
+    }
+    fs.writeFileSync(__dirname + "/config.json", j)
+}
+
+const cheerio = require("cheerio");
+const {verify} = require("hcaptcha");
+const bcrypt = require("bcrypt");
+const config = JSON.parse(fs.readFileSync(__dirname + "/config.json"))
+const port = process.env.PORT || 3333;
+console.log("running @ port " + port);
+
+http.createServer(runServer).listen(port);
 
 function runServer(req, res) {
     var requestUrl = url.parse(req.url, true);
@@ -42,7 +67,7 @@ function runServer(req, res) {
                             });
                             res.end(j);
                         } else {
-                            var id = createId(config.idType)
+                            var id = createId();
                             if (json.securityLevel == "1" | !json.securityLevel) {
                                 var json = JSON.stringify({
                                     "id": id,
@@ -70,7 +95,13 @@ function runServer(req, res) {
                                     "url": json.url,
                                     "securityLevel": json.securityLevel,
                                     "password": json.password
-                                })
+                                });
+                            } else if (json.securityLevel == "3" && config.allowCaptcha == true && config.hCaptchaKey) {
+                                var json = JSON.stringify({
+                                    "id": id,
+                                    "url": json.url,
+                                    "securityLevel": json.securityLevel
+                                });
                             } else {
                                 var j = JSON.stringify({
                                     "err": {
@@ -129,8 +160,8 @@ function runServer(req, res) {
                             });
                             res.end(j);
                         } else {
-                            if (fs.existsSync("./shorts/" + pp[2] + ".json")) {
-                                var jsonD = JSON.parse(fs.readFileSync("./shorts/" + pp[2] + ".json"));
+                            if (fs.existsSync(__dirname + "/shorts/" + pp[2] + ".json")) {
+                                var jsonD = JSON.parse(fs.readFileSync(__dirname + "/shorts/" + pp[2] + ".json"));
                                 if (jsonD.password == json.password) {
                                     var j = JSON.stringify({
                                         "url": jsonD.url
@@ -184,6 +215,67 @@ function runServer(req, res) {
                     });
                     res.end(j);
                 }
+            } else if (pp[1] == "verifyCaptcha") {
+                if (req.method == "POST") {
+                    var body = "";
+                    req.on('data', function (data) {
+                        body += data;
+                    });
+                    req.on('end', function() {
+                        body = JSON.parse(body);
+                        verify(config.hCaptchaKey, body.key).then(function () {
+                            var url = JSON.parse(fs.readFileSync(__dirname + "/shorts/" + body.id + ".json")).url;
+                            var j = JSON.stringify({
+                                "success": true,
+                                "url": url
+                            });
+                            res.writeHead(200, {
+                                "Allow-Access-Content-Control": "*",
+                                "Content-Type": "application/json"
+                            });
+                            res.end(j)
+                        }).catch(function(err) {
+                            var j = JSON.stringify({
+                                "success": false,
+                                "err": {
+                                    "message": err.message,
+                                    "code": err.code
+                                }
+                            });
+                            res.writeHead(400, {
+                                "Allow-Access-Content-Control": "*",
+                                "Content-Type": "application/json"
+                            });
+                            res.end(j);
+                        })
+                    });
+                } else {
+                    var j = JSON.stringify({
+                        "err": {
+                            "code": "methodNotAllowed",
+                            "fix": "You must use the POST method",
+                            "message": "Your method is not allowed."
+                        }
+                    });
+                    res.writeHead(400, {
+                        "Allow-Access-Content-Control": "*",
+                        "Content-Type": "application/json"
+                    });
+                    res.end(j);
+                }
+            } else {
+                var j = JSON.stringify({
+                    "err": {
+                        "code": "incorrectEndpoing",
+                        "fix": "Read the docs and try again",
+                        "message": "You entered an incorrect endpoint."
+                    }
+                });
+                res.writeHead(400, {
+                    "Allow-Access-Content-Control": "*",
+                    "Content-Type": "application/json"
+                });
+                res.end(j);
             }
         }
     } else if (pp[0].length == config.idLength && pp[0] !== "css") {
@@ -197,10 +289,23 @@ function runServer(req, res) {
                     res.end();
                 } else if (d.securityLevel == "2") {
                     fs.readFile("./special/unlock.html", function(err, resp) {
-                        res.writeHead(200, {
-                            "Content-Type": "text/html"
-                        })
-                        res.end(resp);
+                        if (!err) {
+                            res.writeHead(200, {
+                                "Content-Type": "text/html"
+                            })
+                            res.end(resp);
+                        }
+                    })
+                } else if (d.securityLevel == "3") {
+                    fs.readFile(__dirname + "/special/captcha.html", function(err, resp) {
+                        if (!err) {
+                            var $ = cheerio.load(resp);
+                            $(".h-captcha").attr("data-sitekey", config.hCaptchaKey);
+                            res.writeHead(200, {
+                                "Content-Type": "text/html"
+                            })
+                            res.end($.html());
+                        }
                     })
                 }
             })
@@ -270,22 +375,11 @@ function isURL(str) {
     return str.length < 2083 && url.test(str);
 }
 
-function createId(type) {
-    if (type == "generic" | !type) {
-        var result = "";
-        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-        for (var c = 0; c < config.idLength; c++) {
-            result += characters.charAt(Math.floor(Math.random() * characters.length));
-        }
-        return result;
-    } else if (type == "word") {
-        var result = "";
-        var words = fs.readFileSync("words.txt").toString().split("\n");
-        for (var c = 0; c < config.idLength; c++) {
-            var word = words[Math.floor(Math.random() * words.length)].replace("\r", "");
-            var w = word.charAt(0).toUpperCase() + word.substring(1);
-            result += w;
-        }
-        return result;
+function createId() {
+    var result = "";
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+    for (var c = 0; c < config.idLength; c++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
+    return result;
 }

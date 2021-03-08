@@ -3,6 +3,7 @@
     <head>
         <title>LnkShrt</title>
         <link href="style.css" rel="stylesheet">
+        <meta charset="UTF-8">
     </head>
     <body>
         <h1 class="logo">LnkShrt</h1>
@@ -16,6 +17,7 @@
             <select autocomplete="off" name="sec" id="sec" oninput="if (this.value == '2') {document.getElementById('pass').style.display = '';} else {document.getElementById('pass').style.display = 'none';}">
                 <option value="1">Simple Redirect</option>
                 <option value="2">Password</option>
+                <option value="3">Captcha Protected</option>
             </select>
             <input id="pass" placeholder="Make a password" type="password" style="display:none;">
         </div>

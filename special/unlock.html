@@ -3,21 +3,16 @@
     <head>
         <title>Unlock | LnkShrt</title>
         <link href="/style.css" rel="stylesheet">
+        <meta charset="UTF-8">
     </head>
     <body>
         <h1 class="logo">LnkShrt</h1>
-        <div>
-            <input id="pass" type="password" placeholder="Please enter the link's password.">
+        <noscript>This site requires Javascript to be on, due to the security level somebody chose for their link!</noscript>
+        <div id="scriptNeeded" style="display:none;">
+            <input id="pass" type="password" placeholder="Please enter the link's password." onenter="unlock();">
             <button onclick="unlock()">unlock!</button>
             <p style="color:red;" id="error"></p>
         </div>
         <script src="/unlock.js"></script>
-        <script>
-            document.getElementById("pass").addEventListener("keydown", function(event) {
-                if (event.keyCode == 13) {
-                    unlock();
-                }
-            })
-        </script>
     </body>
 </html>

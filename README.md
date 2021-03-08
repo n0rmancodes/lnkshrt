@@ -2,11 +2,12 @@
 LnkShrt is a simple, no dependency, and customizable NodeJS link shortener.
 
 Meant for use on any short domains you got, free, unlicensed.
+
 ## Features
-- Password protection on links
-- Editable words to include in links
-- No tracking
+- Password/Captcha (via hCaptcha) protection on links
+- No server-side tracking
 - API for programmers
+
 ## Configuration
 You can edit ``config.json`` to your liking.
 
@@ -16,17 +17,10 @@ allowPasswords: true
 This allows passwordable links in your instance. (Default: ``true``) (Choices: ``true``/``false``)
 
 ```json
-idType: "generic"
+allowCaptcha: true,
+hCaptchaKey: "[key]"
 ```
-This is the choice of how IDs are created.
-
-Examples:
-
-"generic" => "9jqFX"
-
-"word" => "CleaversDamieSolomonicalMuciditySupergravitating"
-
-(Default: ``generic``) (Choices: ``generic``/``word``)
+This allows hCaptcha-protected links. If it it is ``true``, you must provide a key for it.
 
 ```json
 idLength: 5

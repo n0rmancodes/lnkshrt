@@ -1,3 +1,5 @@
+document.getElementById("scriptNeeded").style.display = "";
+
 function unlock() {
     if (document.getElementById("pass").classList.contains("invalid")) {
         document.getElementById("pass").classList.remove("invalid");

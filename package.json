@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/n0rmancodes/lnkshrt/issues"
   },
-  "homepage": "https://github.com/n0rmancodes/lnkshrt#readme"
+  "homepage": "https://github.com/n0rmancodes/lnkshrt#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "cheerio": "^1.0.0-rc.5",
+    "hcaptcha": "0.0.2"
+  }
 }

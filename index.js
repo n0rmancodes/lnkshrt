@@ -94,7 +94,7 @@ function runServer(req, res) {
                                     "id": id,
                                     "url": json.url,
                                     "securityLevel": json.securityLevel,
-                                    "password": json.password
+                                    "password": bcrypt.hashSync(json.password, 10)
                                 });
                             } else if (json.securityLevel == "3" && config.allowCaptcha == true && config.hCaptchaKey) {
                                 var json = JSON.stringify({
@@ -162,7 +162,7 @@ function runServer(req, res) {
                         } else {
                             if (fs.existsSync(__dirname + "/shorts/" + pp[2] + ".json")) {
                                 var jsonD = JSON.parse(fs.readFileSync(__dirname + "/shorts/" + pp[2] + ".json"));
-                                if (jsonD.password == json.password) {
+                                if (bcrypt.compareSync(json.password, jsonD.password)) {
                                     var j = JSON.stringify({
                                         "url": jsonD.url
                                     })

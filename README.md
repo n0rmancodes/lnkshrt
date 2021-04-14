@@ -25,4 +25,4 @@ This allows hCaptcha-protected links. If it it is ``true``, you must provide a k
 ```json
 idLength: 5
 ```
-This is how long the IDs are. 5 means 5 letters for ``"generic'`` and 5 words for ``"word"``.
+This is how long the IDs are.

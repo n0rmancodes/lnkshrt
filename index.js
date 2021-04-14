@@ -115,6 +115,7 @@ function runServer(req, res) {
                                     "Content-Type": "application/json"
                                 })
                                 res.end(j);
+                                return;
                             }
                             fs.writeFileSync("./shorts/" + id + ".json", json);
                             res.writeHead(200, {

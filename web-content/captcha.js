@@ -1,4 +1,6 @@
 function ended(resp) {
+    document.getElementById("load").style.display = "";
+    document.getElementById("captchaContainer").style.display = "none";
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "/api/verifyCaptcha");
     xhr.send(JSON.stringify({
@@ -13,4 +15,9 @@ function ended(resp) {
             window.location.reload();
         }
     }
+}
+
+function showCaptcha() {
+    document.getElementById("load").style.display = "none";
+    document.getElementById("captchaContainer").style.display = "";
 }

@@ -15,6 +15,8 @@ function unlock() {
     xhr.onload = function () {
         var json = JSON.parse(xhr.responseText);
         if (!json.err) {
+            document.getElementById("load").style.display = "";
+            document.getElementById("scriptNeeded").style.display = "none";
             window.open(json.url, "_self");
         } else {
             document.getElementById("pass").classList.add("invalid");

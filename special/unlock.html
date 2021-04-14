@@ -6,8 +6,11 @@
         <meta charset="UTF-8">
     </head>
     <body>
-        <h1 class="logo">LnkShrt</h1>
+        <a class="logoLink" href="/"><h1 class="logo">LnkShrt</h1></a>
         <noscript>This site requires Javascript to be on, due to the security level somebody chose for their link!</noscript>
+        <div id="load" style="display:none;">
+            <div class="lds-ripple"><div></div><div></div></div>
+        </div>
         <div id="scriptNeeded" style="display:none;">
             <input id="pass" type="password" placeholder="Please enter the link's password." onenter="unlock();">
             <button onclick="unlock()">unlock!</button>

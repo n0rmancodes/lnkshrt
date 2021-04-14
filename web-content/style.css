@@ -6,6 +6,11 @@ body {
     margin:0;
 }
 
+.logoLink {
+    color:black;
+    text-decoration:none;
+}
+
 #url {
     transition: width 1s;
     width:25%;
@@ -25,16 +30,65 @@ body {
     transition:width 0.5s, height 0.5s, opacity 0.5s;
     background:#f0f0f0;
     border-radius:10px;
-    margin-top:1%;
+    margin-top:20px;
     padding:1%;
     width:0;
     height:0;
     opacity:0;
 }
 
+#resp {
+    background:#f0f0f0;
+    margin-top:10px;
+    border-radius:10px;
+    padding:1%;
+    width:50%;
+    max-width:990px;
+}
+
+#resp #rUrl, #resp #error {
+    margin-left:5px;
+}
+
 .invalid {
     animation:shake .6s linear;
     border-color:red;
+}
+
+.lds-ripple {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-ripple div {
+    position: absolute;
+    border: 4px solid black;
+    opacity: 1;
+    border-radius: 50%;
+    animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.lds-ripple div:nth-child(2) {
+    animation-delay: -0.5s;
+}
+
+@keyframes lds-ripple {
+    0% {
+        top:36px;
+        left:36px;
+        width:0;
+        height:0;
+        opacity:1;
+    }
+    100% {
+        top:0px;
+        left:0px;
+        width:72px;
+        height:72px;
+        opacity:0;
+    }
 }
 
 @keyframes shake {

@@ -10,13 +10,13 @@ function createUrl() {
         var j = JSON.stringify({
             url: document.getElementById("url").value,
             securityLevel: document.getElementById("sec").value
-        })
+        });
     } else {
         var j = JSON.stringify({
             url: document.getElementById("url").value,
             securityLevel: document.getElementById("sec").value,
             password: document.getElementById("pass").value
-        })
+        });
     }
     xhr.send(j);
     xhr.onload = function () {
@@ -38,7 +38,7 @@ function openOptions() {
     if (document.getElementById("options").style.display == "none") {
         document.getElementById("options").style.display = "";
         setTimeout(function () {
-            document.getElementById("options").style = "width:50%;max-width:990px;height:25%;opacity:1;";
+            document.getElementById("options").style = "width:100%;max-width:990px;height:25%;opacity:1;";
         }, 10)
     } else {
         document.getElementById("options").style = "width:0;height:0;opacity:0";

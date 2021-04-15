@@ -221,7 +221,7 @@ function runServer(req, res) {
                         res.end(j);
                     }
                 } else if (pp[1] == "verifyCaptcha") {
-                    if (req.method == "POST") {
+                    if (req.method.toLowerCase() == "post") {
                         var body = "";
                         req.on('data', function (data) {
                             body += data;
@@ -232,7 +232,8 @@ function runServer(req, res) {
                                 var url = JSON.parse(fs.readFileSync(__dirname + "/shorts/" + body.id + ".json")).url;
                                 var j = JSON.stringify({
                                     "success": true,
-                                    "url": url
+                                    "url": url,
+                                    "bypassKey": createBypass()
                                 });
                                 res.writeHead(200, {
                                     "Allow-Access-Content-Control": "*",

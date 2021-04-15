@@ -1,5 +1,9 @@
 document.getElementById("scriptNeeded").style.display = "";
 
+document.getElementById("pass").onkeydown = function(e) {
+    if (e.key == "Enter") {unlock();}
+};
+
 function unlock() {
     if (document.getElementById("pass").classList.contains("invalid")) {
         document.getElementById("pass").classList.remove("invalid");

@@ -7,15 +7,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <a class="logoLink" href="/"><h1 class="logo">LnkShrt</h1></a>
-        <noscript>This site requires Javascript to be on, due to the security level somebody chose for their link!</noscript>
-        <div id="load" style="display:none;">
-            <div class="lds-ripple"><div></div><div></div></div>
-        </div>
-        <div id="scriptNeeded" style="display:none;">
-            <input id="pass" type="password" placeholder="Please enter the link's password." onenter="unlock();">
-            <button onclick="unlock()">unlock!</button>
-            <p style="color:red;" id="error"></p>
+        <div class="box">
+            <a class="logoLink" href="/"><h1 class="logo">LnkShrt</h1></a>
+            <noscript>This site requires Javascript to be on, due to the security level somebody chose for their link!</noscript>
+            <div id="load" style="display:none;">
+                <div class="lds-ripple"><div></div><div></div></div>
+            </div>
+            <div id="scriptNeeded" style="display:none;">
+                <input id="pass" type="password" placeholder="Please enter the link's password.">
+                <button id="unlockBtn" onclick="unlock()">unlock!</button>
+                <p style="color:red;" id="error"></p>
+            </div>
         </div>
         <script src="/js/unlock.js"></script>
     </body>

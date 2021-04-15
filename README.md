@@ -20,9 +20,14 @@ This allows passwordable links in your instance. (Default: ``true``) (Choices: `
 allowCaptcha: true,
 hCaptchaKey: "[key]"
 ```
-This allows hCaptcha-protected links. If it it is ``true``, you must provide a key for it.
+This allows hCaptcha-protected links. If it it is ``true``, you must provide a key for it. (Default: ``false``) (Choices: ``true``/``false``) 
 
 ```json
 idLength: 5
 ```
 This is how long the IDs are.
+
+```json
+port: 3333
+```
+Port is an interger of what port you want the instance to be hosted on, default is ``3333``.

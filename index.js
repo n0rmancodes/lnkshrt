@@ -27,7 +27,7 @@ if (!fs.existsSync(__dirname + "/config.json")) {
 const cheerio = require("cheerio");
 const {verify} = require("hcaptcha");
 const bcrypt = require("bcrypt");
-const config = JSON.parse(fs.readFileSync(__dirname + "/config.json"))
+const config = JSON.parse(fs.readFileSync(__dirname + "/config.json"));
 const port = config.port || 3333;
 console.log("running @ port " + port);
 
@@ -70,7 +70,7 @@ function runServer(req, res) {
                                         "id": id,
                                         "url": json.url,
                                         "securityLevel": json.securityLevel
-                                    })
+                                    });
                                 } else if (json.securityLevel == "2" && config.allowPasswords) {
                                     if (json.password == "") {
                                         var j = JSON.stringify({
@@ -84,7 +84,7 @@ function runServer(req, res) {
                                         res.writeHead(400, {
                                             "Allow-Access-Content-Control": "*",
                                             "Content-Type": "application/json"
-                                        })
+                                        });
                                         res.end(j);
                                         return;
                                     }
@@ -112,7 +112,7 @@ function runServer(req, res) {
                                     res.writeHead(400, {
                                         "Allow-Access-Content-Control": "*",
                                         "Content-Type": "application/json"
-                                    })
+                                    });
                                     res.end(j);
                                     return;
                                 }
@@ -123,7 +123,7 @@ function runServer(req, res) {
                                 });
                                 res.end(json);
                             }
-                        })
+                        });
                     } else {
                         var j = JSON.stringify({
                             "success": false,
@@ -167,7 +167,7 @@ function runServer(req, res) {
                                     if (bcrypt.compareSync(json.password, jsonD.password)) {
                                         var j = JSON.stringify({
                                             "url": jsonD.url
-                                        })
+                                        });
                                         res.writeHead(200, {
                                             "Allow-Access-Content-Control": "*",
                                             "Content-Type": "application/json"
@@ -181,7 +181,7 @@ function runServer(req, res) {
                                                 "fix": "Enter the valid password.",
                                                 "message": "Incorrect password."
                                             }
-                                        })
+                                        });
                                         res.writeHead(400, {
                                             "Allow-Access-Content-Control": "*",
                                             "Content-Type": "application/json"
@@ -196,7 +196,7 @@ function runServer(req, res) {
                                             "fix": "Try again later.",
                                             "message": "This ID does not exist."
                                         }
-                                    })
+                                    });
                                     res.writeHead(400, {
                                         "Allow-Access-Content-Control": "*",
                                         "Content-Type": "application/json"
@@ -204,7 +204,7 @@ function runServer(req, res) {
                                     res.end(j);
                                 }
                             }
-                        })
+                        });
                     } else {
                         var j = JSON.stringify({
                             "success": false,
@@ -239,7 +239,7 @@ function runServer(req, res) {
                                     "Allow-Access-Content-Control": "*",
                                     "Content-Type": "application/json"
                                 });
-                                res.end(j)
+                                res.end(j);
                             }).catch(function(err) {
                                 var j = JSON.stringify({
                                     "success": false,
@@ -253,7 +253,7 @@ function runServer(req, res) {
                                     "Content-Type": "application/json"
                                 });
                                 res.end(j);
-                            })
+                            });
                         });
                     } else {
                         var j = JSON.stringify({
@@ -311,7 +311,7 @@ function runServer(req, res) {
                                             "url": j.url
                                         }));
                                     }
-                                })
+                                });
                             } else {
                                 var j = JSON.stringify({
                                     "success": false,
@@ -422,7 +422,7 @@ function runServer(req, res) {
                                 res.writeHead(200, {
                                     "Access-Control-Allow-Origin": "*",
                                     "Content-Type": "text/html"
-                                })
+                                });
                                 res.end(resp);
                             } else {
                                 res.writeHead(500, {
@@ -431,7 +431,7 @@ function runServer(req, res) {
                                 });
                                 res.end(err.message);
                             }
-                        })
+                        });
                     } else if (d.securityLevel == "3") {
                         fs.readFile(__dirname + "/web-content/dynamic/captcha.html", function(err, resp) {
                             if (!err) {
@@ -449,7 +449,7 @@ function runServer(req, res) {
                                 });
                                 res.end(err.message);
                             }
-                        })
+                        });
                     }
                 });
             } else {
@@ -467,7 +467,7 @@ function runServer(req, res) {
                         });
                         res.end(resp);
                     }
-                })
+                });
             }
         }
     }
@@ -495,7 +495,7 @@ function createBypass() {
     }
     if (!fs.existsSync(__dirname + "/private/bp-db.json")) {fs.writeFileSync(__dirname + "/private/bp-db.json", "[]");}
     var j = JSON.parse(fs.readFileSync(__dirname + "/private/bp-db.json"));
-    j.push({key: result, dateGen: new Date() * 1})
+    j.push({key: result, dateGen: new Date() * 1});
     fs.writeFileSync(__dirname + "/private/bp-db.json", JSON.stringify(j));
     return result;
 }

@@ -17,10 +17,6 @@ body {
     position:relative;
 }
 
-#url:focus {
-    width:50%;
-}
-
 #pass {
     position:relative;
     width:25%;
@@ -111,6 +107,6 @@ body {
         left:1px;
     }
     100% {
-        left: 0px;
+        left:0px;
     }
 }

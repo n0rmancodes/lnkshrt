@@ -68,9 +68,11 @@ function runServer(req, res) {
             if (pp[1]) {
                 if (pp[1] == "createUrl") {
                     if (!fs.existsSync(__dirname + "/shorts/")) {fs.mkdirSync(__dirname + "/shorts/");}
+                    /*
                     if(domains) {
                       if (!fs.existsSync(__dirname + "/shorts/"+domainString)) {fs.mkdirSync(__dirname + "/shorts/"+domainString);}
                     }
+                    */
                     if (req.method.toLowerCase() == "post") {
                         var body = "";
                         req.on('data', function (data) {
@@ -144,8 +146,9 @@ function runServer(req, res) {
                                     })
                                     res.end(j);
                                     return;
-                                }
+                                }/*
                                 fs.writeFileSync("./shorts/"+domainString + id + ".json", json);
+                                */
                                 res.writeHead(200, {
                                     "Allow-Access-Content-Control": "*",
                                     "Content-Type": "application/json"
@@ -191,8 +194,8 @@ function runServer(req, res) {
                                 });
                                 res.end(j);
                             } else {
-                                if (fs.existsSync(__dirname + "/shorts/"+domainString + pp[2] + ".json")) {
-                                    var jsonD = JSON.parse(fs.readFileSync(__dirname + "/shorts/"+domainString + pp[2] + ".json"));
+                                if (fs.existsSync(__dirname + "/shorts/" + pp[2] + ".json")) {
+                                    var jsonD = JSON.parse(fs.readFileSync(__dirname + "/shorts/" + pp[2] + ".json"));
                                     if (bcrypt.compareSync(json.password, jsonD.password)) {
                                         var j = JSON.stringify({
                                             "url": jsonD.url
@@ -258,7 +261,7 @@ function runServer(req, res) {
                         req.on('end', function() {
                             body = JSON.parse(body);
                             verify(config.hCaptchaKey, body.key).then(function () {
-                                var url = JSON.parse(fs.readFileSync(__dirname + "/shorts/"+domainString + body.id + ".json")).url;
+                                var url = JSON.parse(fs.readFileSync(__dirname + "/shorts/"+ body.id + ".json")).url;
                                 var j = JSON.stringify({
                                     "success": true,
                                     "url": url,

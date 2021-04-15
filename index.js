@@ -95,7 +95,7 @@ function runServer(req, res) {
                                 });
                                 res.end(j);
                             } else {
-                                var id = createId(reqConfig);
+                                var id = createId();
                                 if (json.securityLevel == "1" | !json.securityLevel) {
                                     var json = JSON.stringify({
                                         "id": id,

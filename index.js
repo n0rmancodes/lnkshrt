@@ -39,6 +39,7 @@ function runServer(req, res) {
     var requestUrl = url.parse(req.url, true);
     var path = requestUrl.pathname;
     var pp = path.split("/").slice(1);
+    /*
     let reqConfig = config
     if (domains) {
       reqConfig = config.domains[req.headers.host]
@@ -61,6 +62,7 @@ function runServer(req, res) {
     if (domains) {
       domainString = req.headers.host+"/"
     }
+    */
     switch (pp[0]) {
         case "api":
             if (pp[1]) {

@@ -65,12 +65,11 @@ body {
 }
 
 #resp {
-    background:#f0f0f0;
-    margin-top:10px;
+    background:#a96fb9;
+    margin-top:40px;
     border-radius:10px;
     padding:1%;
-    width:50%;
-    max-width:990px;
+    width:98%;
 }
 
 #resp #rUrl, #resp #error {

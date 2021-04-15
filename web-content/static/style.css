@@ -1,5 +1,20 @@
 body {
-    font-family:Helvetica;
+    background: #2c242e;
+    font-family: sans-serif;
+    font-size: 12px;
+    margin: 0px;
+    color: white;
+    overflow: hidden;
+}
+
+.box {
+    background: #b3a0b8;
+    border-radius: 20px;
+    margin: 16vh auto;
+    padding: 20px;
+    width: 70vw;
+    height: 200px;
+    max-width: 600px;
 }
 
 .logo {
@@ -7,14 +22,30 @@ body {
 }
 
 .logoLink {
-    color:black;
-    text-decoration:none;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    text-align: center;
+}
+
+#form {
+    width: 480px;
+    max-width: 100%;
+    height: 25px;
+    margin: 0 auto;
 }
 
 #url {
+    border-radius: 4px;
+    display: block;
+    float: left;
     transition: width 1s;
-    width:25%;
-    min-width:250px;
+    padding: 0px 3px;
+    border: 0;
+    width: calc(75% - 8px);
+    height: 100%;
+    margin: 0px 3px;
+    min-width: 100px;
     position:relative;
 }
 
@@ -26,14 +57,11 @@ body {
 
 #options {
     transition:width 0.5s, height 0.5s, opacity 0.5s;
-    background:#f0f0f0;
-    border-radius:10px;
-    max-width:990px;
-    margin-top:20px;
-    padding:1%;
-    width:0;
+    margin:10px auto;
+    padding:10px;
+    width: 480px;
+    max-width: 100%;
     height:0;
-    opacity:0;
 }
 
 #resp {
@@ -112,4 +140,17 @@ body {
     100% {
         left:0px;
     }
+}
+
+#form button {
+    border-radius: 4px;
+    display: block;
+    padding: 0px;
+    margin: 0px 3px;
+    border: 0;
+    float: left;
+    width: calc(25% - 10px);
+    height: 100%;
+    color: white;
+    background: #535da5;
 }

@@ -513,6 +513,7 @@ function isURL(str) {
 }
 
 function createId(settings) {
+    if (!settings) {settings = config;}
     var result = "";
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
     for (var c = 0; c < settings.idLength; c++) {

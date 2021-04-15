@@ -126,6 +126,11 @@ body {
     animation-delay: -0.5s;
 }
 
+.btm {
+    left:0;
+    bottom:0;
+}
+
 @keyframes lds-ripple {
     0% {
         top:36px;

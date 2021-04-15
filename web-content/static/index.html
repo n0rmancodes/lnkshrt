@@ -7,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
-        <div class="box">
+        <div style="height:225px !important" class="box">
             <a class="logoLink" href="/"><h1 class="logo">LnkShrt</h1></a>
             <div id="form">
                 <input placeholder="Put in a long url." id="url">
@@ -16,14 +16,14 @@
             <div id="options">
                 <h3 style="margin-top:0;margin-bottom:5px;">Options</h3>
                 <label for="sec">Security</label>
-                <select autocomplete="off" name="sec" id="sec" oninput="if (this.value == '2') {document.getElementById('pass').style.display = '';} else {document.getElementById('pass').style.display = 'none';}">
+                <select autocomplete="off" name="sec" id="sec" oninput="if (this.value == '2') {document.getElementById('passHome').style.display = '';} else {document.getElementById('passHome').style.display = 'none';}">
                     <option value="1">Simple Redirect</option>
                     <option value="2">Password</option>
                     <option value="3">Captcha Protected</option>
                 </select>
-                <input id="pass" placeholder="Make a password" type="password" style="display:none;">
+                <input id="passHome" placeholder="Make a password" type="password" style="display:none;">
             </div>
-            <div id="load" style="display:none;">
+            <div id="load" style="display:none;margin-top:45px;">
                 <div class="lds-ripple"><div></div><div></div></div>
             </div>
             <div id="resp" style="display:none;">

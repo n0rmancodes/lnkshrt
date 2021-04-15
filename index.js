@@ -463,7 +463,7 @@ function runServer(req, res) {
                     } else {
                         res.writeHead(200, {
                             "Allow-Access-Content-Control": "*",
-                            "Content-Type": mime(path)
+                            "Content-Type": "text/html"
                         });
                         res.end(resp);
                     }

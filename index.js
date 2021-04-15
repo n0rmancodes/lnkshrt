@@ -39,11 +39,36 @@ function runServer(req, res) {
     var requestUrl = url.parse(req.url, true);
     var path = requestUrl.pathname;
     var pp = path.split("/").slice(1);
+    let reqConfig = config
+    if (domains) {
+      reqConfig = config.domains[req.headers.host]
+    }
+    if (!reqConfig) {
+      var j = JSON.stringify({
+          "err": {
+              "code": "400",
+              "message": "this domain isn't in the config",
+              "fix": "add this domain to the config."
+          }
+      });
+      res.writeHead(400, {
+          "Allow-Access-Content-Control": "*",
+          "Content-Type": "application/json"
+      });
+      res.end(j);
+    }
+    let domainString = ''
+    if (domains) {
+      domainString = req.headers.host+"/"
+    }
     switch (pp[0]) {
-        case "api": 
+        case "api":
             if (pp[1]) {
                 if (pp[1] == "createUrl") {
                     if (!fs.existsSync(__dirname + "/shorts/")) {fs.mkdirSync(__dirname + "/shorts/");}
+                    if(domains) {
+                      if (!fs.existsSync(__dirname + "/shorts/"+domainString)) {fs.mkdirSync(__dirname + "/shorts/"+domainString);}
+                    }
                     if (req.method.toLowerCase() == "post") {
                         var body = "";
                         req.on('data', function (data) {
@@ -66,14 +91,14 @@ function runServer(req, res) {
                                 });
                                 res.end(j);
                             } else {
-                                var id = createId();
+                                var id = createId(reqConfig);
                                 if (json.securityLevel == "1" | !json.securityLevel) {
                                     var json = JSON.stringify({
                                         "id": id,
                                         "url": json.url,
                                         "securityLevel": json.securityLevel
                                     })
-                                } else if (json.securityLevel == "2" && config.allowPasswords) {
+                                } else if (json.securityLevel == "2" && reqConfig.allowPasswords) {
                                     if (json.password == "") {
                                         var j = JSON.stringify({
                                             "success": false,
@@ -96,7 +121,7 @@ function runServer(req, res) {
                                         "securityLevel": json.securityLevel,
                                         "password": bcrypt.hashSync(json.password, 10)
                                     });
-                                } else if (json.securityLevel == "3" && config.allowCaptcha == true && config.hCaptchaKey) {
+                                } else if (json.securityLevel == "3" && reqConfig.allowCaptcha == true && reqConfig.hCaptchaKey) {
                                     var json = JSON.stringify({
                                         "id": id,
                                         "url": json.url,
@@ -118,7 +143,7 @@ function runServer(req, res) {
                                     res.end(j);
                                     return;
                                 }
-                                fs.writeFileSync("./shorts/" + id + ".json", json);
+                                fs.writeFileSync("./shorts/"+domainString + id + ".json", json);
                                 res.writeHead(200, {
                                     "Allow-Access-Content-Control": "*",
                                     "Content-Type": "application/json"
@@ -164,8 +189,8 @@ function runServer(req, res) {
                                 });
                                 res.end(j);
                             } else {
-                                if (fs.existsSync(__dirname + "/shorts/" + pp[2] + ".json")) {
-                                    var jsonD = JSON.parse(fs.readFileSync(__dirname + "/shorts/" + pp[2] + ".json"));
+                                if (fs.existsSync(__dirname + "/shorts/"+domainString + pp[2] + ".json")) {
+                                    var jsonD = JSON.parse(fs.readFileSync(__dirname + "/shorts/"+domainString + pp[2] + ".json"));
                                     if (bcrypt.compareSync(json.password, jsonD.password)) {
                                         var j = JSON.stringify({
                                             "url": jsonD.url
@@ -231,7 +256,7 @@ function runServer(req, res) {
                         req.on('end', function() {
                             body = JSON.parse(body);
                             verify(config.hCaptchaKey, body.key).then(function () {
-                                var url = JSON.parse(fs.readFileSync(__dirname + "/shorts/" + body.id + ".json")).url;
+                                var url = JSON.parse(fs.readFileSync(__dirname + "/shorts/"+domainString + body.id + ".json")).url;
                                 var j = JSON.stringify({
                                     "success": true,
                                     "url": url,
@@ -379,7 +404,7 @@ function runServer(req, res) {
             }
         return;
 
-        default: 
+        default:
             if (fs.existsSync(__dirname + "/web-content/static" + path + "index.html")) {
                 fs.readFile(__dirname + "/web-content/static" + path + "index.html" , function(err, resp) {
                     if (err) {
@@ -482,10 +507,10 @@ function isURL(str) {
     return str.length < 2083 && url.test(str);
 }
 
-function createId() {
+function createId(settings) {
     var result = "";
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
-    for (var c = 0; c < config.idLength; c++) {
+    for (var c = 0; c < settings.idLength; c++) {
         result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return result;

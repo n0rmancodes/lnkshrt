@@ -502,7 +502,7 @@ function createBypass() {
 
 function removeBypass(t) {
     if (t.length !== 25) {return null;}
-    if (!fs.existsSync(__dirname + "/private/bp-db.json")) {return true;}
+    if (!fs.existsSync(__dirname + "/private/") || !fs.existsSync(__dirname + "/private/bp-db.json")) {return true;}
     else {
         var j = JSON.parse(fs.readFileSync(__dirname + "/private/bp-dp.json"));
         var nj = [];

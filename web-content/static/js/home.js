@@ -5,6 +5,7 @@ function createUrl() {
         document.getElementById("error").innerHTML = "";
     }
     var xhr = new XMLHttpRequest();
+    document.getElementById("resp").style.display = "none";
     xhr.open("POST", "/api/createUrl");
     if (document.getElementById("sec").value == "1") {
         var j = JSON.stringify({
@@ -25,6 +26,7 @@ function createUrl() {
             document.getElementById("error").innerHTML = json.err.message;
             document.getElementById("url").classList.add("invalid");
             document.getElementById("load").style.display = "none";
+            document.getElementById("resp").style.display = "";
             return;
         }
         document.getElementById("rUrl").href = json.id;

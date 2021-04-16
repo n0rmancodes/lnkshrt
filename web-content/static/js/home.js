@@ -26,12 +26,16 @@ function createUrl() {
             document.getElementById("error").innerHTML = json.err.message;
             document.getElementById("url").classList.add("invalid");
             document.getElementById("load").style.display = "none";
+            document.getElementById("rUrl").style.display = "none";
             document.getElementById("resp").style.display = "";
+            document.getElementById("error").style.display = "";
             return;
         }
         document.getElementById("rUrl").href = json.id;
         document.getElementById("rUrl").innerHTML = window.location.href + json.id;
         document.getElementById("resp").style.display = "";
+        document.getElementById("rUrl").style.display = "";
         document.getElementById("load").style.display = "none";
+        document.getElementById("error").style.display = "none";
     }
 }

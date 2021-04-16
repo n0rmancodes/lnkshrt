@@ -131,6 +131,12 @@ body {
     bottom:0;
 }
 
+#error {
+    color:#ffa6a6;
+    margin-top:0;
+    margin-bottom:0;
+}
+
 @keyframes lds-ripple {
     0% {
         top:36px;

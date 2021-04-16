@@ -502,9 +502,9 @@ function createBypass() {
 
 function removeBypass(t) {
     if (t.length !== 25) {return null;}
-    if (!fs.existsSync(__dirname + "/private/") || !fs.existsSync(__dirname + "/private/bp-db.json")) {return true;}
+    if (!fs.existsSync(__dirname + "/private/") && !fs.existsSync(__dirname + "/private/bp-db.json")) {return true;}
     else {
-        var j = JSON.parse(fs.readFileSync(__dirname + "/private/bp-dp.json"));
+        var j = JSON.parse(fs.readFileSync(__dirname + "/private/bp-db.json"));
         var nj = [];
         for (var c in j) {
             if (j[c].key == t) {continue;} else {nj.push(j[c])}

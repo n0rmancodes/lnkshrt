@@ -1,5 +1,5 @@
 # LnkShrt
-LnkShrt is a simple, no dependency, and customizable NodeJS link shortener.
+LnkShrt is a simple and customizable NodeJS link shortener.
 
 Meant for use on any short domains you got, free, unlicensed.
 

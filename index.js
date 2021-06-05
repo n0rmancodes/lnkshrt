@@ -116,7 +116,7 @@ function runServer(req, res) {
                                     res.end(j);
                                     return;
                                 }
-                                fs.writeFileSync("./shorts/" + id + ".json", json);
+                                fs.writeFileSync(__dirname + "/shorts/" + id + ".json", json);
                                 res.writeHead(200, {
                                     "Allow-Access-Content-Control": "*",
                                     "Content-Type": "application/json"

@@ -24,6 +24,8 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cheerio": "^1.0.0-rc.5",
+    "express": "^4.17.1",
+    "formidable": "^1.2.2",
     "hcaptcha": "0.0.2"
   }
 }
